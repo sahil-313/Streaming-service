@@ -1,0 +1,58 @@
+{% extends "streamer/layout.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Sign Up</title>
+{% endblock %}
+
+{% block body %}
+
+    <body class="bg-gradient-to-r from-[#F28383] from-10% via-[#9D6CD2] via-30% to-[#481EDC] to-90% flex items-center justify-center h-screen">
+        <div class="max-w-[1260px] bg-black-dark grid grid-cols-2 items-center gap-20 p-5 rounded-2xl">
+            <div class="relative">
+                <img src="{% static 'streamer/video-camera.svg' %}" alt="" class="absolute -top-40">
+            </div>
+
+            <div class="max-w-80 grid gap-5">
+                <h1 class="text-5xl font-bold text-white">Sign Up</h1>
+                <p class="text-dull-white">Find your favorite videos and watch videos made by others ✨</p>
+                <form action="{% url 'signup' %}" method="post" class="space-y-6 text-white">
+                    <div class="relative">
+                        <div class="absolute top-1 left-1 bg-white-medium rounded-full p-1 flex items-center justify-center">
+                            👤
+                        </div>
+                        <input type="text" name="username" placeholder="Username" required class="w-80 bg-white-light py-2 px-12 rounded-full focus:bg-black-dark focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg">
+                    </div>
+                    <div class="relative">
+                        <div class="absolute top-1 left-1 bg-white-medium rounded-full p-1 flex items-center justify-center">
+                            ✉️
+                        </div>
+                        <input type="email" name="email" placeholder="Email Address" required class="w-80 bg-white-light py-2 px-12 rounded-full focus:bg-black-dark focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg">
+                    </div>
+                    <div class="relative">
+                        <div class="absolute top-1 left-1 bg-white-medium rounded-full p-1 flex items-center justify-center">
+                            🔒
+                        </div>
+                        <input type="password" name="password" placeholder="Password" required class="w-80 bg-white-light py-2 px-12 rounded-full focus:bg-black-dark focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg">
+                    </div>
+                    <div class="relative">
+                        <div class="absolute top-1 left-1 bg-white-medium rounded-full p-1 flex items-center justify-center">
+                            ✔️
+                        </div>
+                        <input type="password" name="confirmation" placeholder="Re-type password" required class="w-80 bg-white-light py-2 px-12 rounded-full focus:bg-black-dark focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg">
+                    </div>
+                    <button class="bg-gradient-to-r from-blue-400 to-cyan-200 w-80 font-semibold rounded-full py-2">Sign Up</button>
+                </form>
+                <div class="text-dull-white border-t border-white-light pt-4 space-y-4 text-sm">
+                    <p>Already have an account? <a class="text-neon-blue font-semibold cursor-pointer" href="{% url 'login' %}">Log In</a></p>
+                </div>
+
+                {% if message %}
+                    <div class="rounded-lg border-2 border-red-500 bg-red-400 p-2 text-center text-white">{{message}}</div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </body>
+
+{% endblock %}
