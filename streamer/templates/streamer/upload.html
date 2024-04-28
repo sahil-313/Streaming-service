@@ -1,0 +1,61 @@
+{% extends "streamer/layout.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Upload</title>
+{% endblock %}
+
+{% block body %}
+
+    <body class="bg-gray-950">
+        <div class="w-full mx-auto p-8">
+            <h1 class="text-3xl font-semibold text-center text-white mb-6">Upload your video</h1>
+    
+            <form action="{% url 'upload_video' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-4 flex">
+                    <label for="video-title" class="block text-white font-bold m-2 px-7">Title:</label>
+                    <input type="text" id="video-title" name="video-title" class="w-1/2 px-3 py-2 ml-8 border rounded-full bg-black-dark focus:outline-none focus:border-red-500 text-white" maxlength="200" required>
+                </div>
+
+                <div class="mb-4 flex">
+                    <label for="video-description" class="block text-white font-bold m-2">Description:</label>
+                    <textarea name="video-description" id="video-description" rows="5" class="w-1/2 px-3 py-2 ml-8 border rounded-md bg-black-dark focus:outline-none focus:border-red-500 text-white"></textarea>
+                </div>
+
+                <div class="mb-4 flex">
+                    <label for="video-category" class="block text-white font-bold m-2 px-2">Category:</label>
+                    <input type="text" id="video-category" name="video-category" class="w-1/2 px-3 py-2 ml-8 border rounded-full bg-black-dark focus:outline-none focus:border-red-500 text-white" maxlength="50" required>
+                </div>
+
+                <div class="mb-4 flex">
+                    <label for="video-thumbnail" class="block text-white font-bold m-2 pr-8">Thumbnail:</label>
+                    <div class="relative ml-1">
+                        <input type="file" name="video-thumbnail" id="video-thumbnail" accept="image/*" class="w-0 h-0 opacity-0 absolute" required>
+                        <button type="button" onclick="document.getElementById('video-thumbnail').click()" class="bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 px-4 rounded">Choose Thumbnail</button>
+                    </div>
+                    <div class="mx-2">
+                        <img id="thumbnail-preview" class="w-10 h-10 rounded hidden" src="#" alt="Thumbnail Preview">
+                    </div>
+                </div>
+
+                <div class="mb-4 flex">
+                    <label for="video-file" class="block text-white font-bold m-2 pl-4 pr-12">Video:</label>
+                    <div class="relative ml-1">
+                        <input type="file" name="video-file" id="video-file" accept="video/*" class="w-0 h-0 opacity-0 absolute" required>
+                        <button type="button" onclick="document.getElementById('video-file').click()" class="bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 px-4 rounded">Choose Video</button>
+                    </div>
+                </div>
+    
+                <button type="submit" class="bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 px-4 rounded">
+                    Upload
+                </button>
+            </form>
+        </div>
+    </body>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'streamer/upload.js' %}"></script>
+{% endblock %}
