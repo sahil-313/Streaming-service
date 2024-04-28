@@ -4,15 +4,17 @@ import boto3
 import boto3.session
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from .models import User, Video, Comment, Playlist, Subscriber, Like, Dislike, Notification
 
 # Create your views here.
 def index(request):
+
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
 
@@ -118,3 +120,89 @@ def profile(request, user_id):
         "user_profile": user_profile,
         "user_profile_pic": user_profile_pic
     })
+
+
+@login_required
+def upload_video(request):
+    if request.method == 'POST':
+        title = request.POST.get('video-title')
+        description = request.POST.get('video-description')
+        category = request.POST.get('video-category')
+        thumbnail = request.FILES.get('video-thumbnail')
+        video_file = request.FILES.get('video-file')
+
+        new_video = Video(
+            creator = request.user,
+            title = title,
+            description = description,
+            category = category,
+            video_file = video_file,
+            thumbnail = thumbnail
+        )
+        new_video.save()
+        
+        return HttpResponseRedirect(reverse("index"))
+    
+    else:
+        return render(request, "streamer/upload.html")
+
+
+def get_videos(request):
+    
+    videos = Video.objects.all()
+    video_list = []
+
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        config=boto3.session.Config(signature_version='s3v4'),
+        region_name='eu-north-1'
+    )
+
+    for video in videos:
+        thumbnail_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME, 'Key': str(video.thumbnail)},
+            ExpiresIn=36000
+        )
+
+        video_data = {
+            "title": video.title,
+            "creator": video.creator.username,
+            "creator_id": video.creator.id,
+            "thumbnail": thumbnail_url,
+            "video_id": video.id
+        }
+
+        video_list.append(video_data)
+
+    return JsonResponse({"videos": video_list})
+
+
+def watch_video(request, video_id):
+
+    try:
+        video = Video.objects.get(id=video_id)
+
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            config=boto3.session.Config(signature_version='s3v4'),
+            region_name='eu-north-1'
+        )
+
+        video_file_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME, 'Key': str(video.video_file)},
+            ExpiresIn=36000
+        )
+
+        return render(request, "streamer/watch.html", {
+            "video": video,
+            "video_file_url": video_file_url
+        })
+    
+    except Video.DoesNotExist:
+        return HttpResponse(status=404, reason="Video not found")
