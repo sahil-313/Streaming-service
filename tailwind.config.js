@@ -11,7 +11,10 @@ module.exports = {
         'white-light': '#FFFFFF30',
         'white-medium': '#FFFFFF40',
         'neon-blue': '#2FB8FF',
-      }
+      },
+      fontFamily: {
+        'nunito': ['nunito', 'sans-serif'],
+      },
     },
   },
   plugins: [],
