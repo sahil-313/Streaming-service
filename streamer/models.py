@@ -5,35 +5,21 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 # Create your models here.
 class User(AbstractUser):
-    profile_pic = models.ImageField(storage=S3Boto3Storage(), upload_to='profile_pics/', blank=True, default='profile_pics/default-profile-pic.jpg')
+    profile_pic = models.ImageField(storage=S3Boto3Storage(), upload_to='media/profile_pics/', blank=True, default='media/profile_pics/default-profile-pic.jpg')
     bio = models.TextField(blank=True)
 
 class Video(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='videos')
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    thumbnail = models.FileField(storage=S3Boto3Storage(), upload_to='thumbnails/')
+    thumbnail = models.FileField(storage=S3Boto3Storage(), upload_to='media/thumbnails/')
     category = models.CharField(max_length=50)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    video_file = models.FileField(storage=S3Boto3Storage(), upload_to='videos/')
+    video_file = models.FileField(storage=S3Boto3Storage(), upload_to='media/videos/')
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
-    def serialize(self):
-        return {
-            "video_id": self.id,
-            "creator_id": self.creator.id,
-            "creator_username": self.creator.username,
-            "title": self.title,
-            "description": self.description,
-            "category": self.category,
-            "likes": self.likes,
-            "dislikes": self.dislikes,
-            "uploaded_at": self.uploaded_at.strftime("%b %d %Y, %I:%M %p"),
-            "views": self.views
-        }
-    
     def __str__(self):
         return f"Video title: {self.title} with description: {self.description} created by {self.creator}"
 
