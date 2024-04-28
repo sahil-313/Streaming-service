@@ -52,7 +52,7 @@
                 </a>
               </li>
               <li class="w-max group-hover:w-full">
-                <a href="" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
+                <a href="{% url 'upload_video' %}" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
                   <div class="w-max flex items-center px-3 gap-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
@@ -105,19 +105,9 @@
               </svg>              
             </button>
           </form>
-          {% if user.is_authenticated %}
-          <button class="absolute right-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-            </svg>
-            <span class="bg-red-500 text-white rounded-full h-4 w-4 absolute -top-1 -right-1 flex items-center justify-center text-xs"></span>            
-          </button>
-          <div class="notification-tray"></div>
-          {% endif %}
         </div>
         <div class="px-6 lg:px-12">
-          <div class="h-96 flex justify-center items-center rounded-2xl border border-dashed border-gray-300/40 dark:border-gray-700">
-            <span class="text-gray-500 dark:text-gray-200">Content</span>
+          <div id="video-container" class="h-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 rounded-2xl mb-4">
           </div>
         </div>
       </div>
@@ -127,4 +117,5 @@
 {% endblock %}
 
 {% block script %}
+  <script src="{% static 'streamer/index.js' %}"></script>
 {% endblock %}
