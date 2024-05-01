@@ -72,3 +72,11 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.user} received a {self.action_type} notification"
+
+class UserAction(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    action = models.CharField(max_length=10, choices=[('like', 'Like'), ('dislike', 'Dislike')])
+
+    def __str__(self):
+        return f"{self.user.username} {self.action}d {self.video.title}"
