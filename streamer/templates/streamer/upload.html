@@ -11,7 +11,7 @@
         <div class="w-full mx-auto p-8">
             <h1 class="text-3xl font-semibold text-center text-white mb-6">Upload your video</h1>
     
-            <form action="{% url 'upload_video' %}" method="POST" enctype="multipart/form-data">
+            <form id="video-upload-form" action="{% url 'upload_video' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-4 flex">
                     <label for="video-title" class="block text-white font-bold m-2 px-7">Title:</label>
@@ -45,7 +45,7 @@
                         <input type="file" name="video-file" id="video-file" accept="video/*" class="w-0 h-0 opacity-0 absolute" required>
                         <button type="button" onclick="document.getElementById('video-file').click()" class="bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 px-4 rounded">Choose Video</button>
                     </div>
-                </div>
+                </div>               
     
                 <button type="submit" class="bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 px-4 rounded">
                     Upload

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    <title>Profile Page</title>
+    <title>{{ user_profile.username }}</title>
 {% endblock %}
 
 {% block body %}
@@ -12,16 +12,61 @@
             <div class="p-6 w-full text-white">
                 <img src="{{ user_profile_pic }}" alt="Profile Picture" class="w-24 h-24 rounded-full mx-auto mb-4">
                 <h1 class="text-2xl font-semibold text-center mb-2"> {{ user_profile.username }} </h1>
-                <p class="text-center mb-4"> {{ user_profile.bio }} </p>
+                <p class="text-center mb-4"> {{user_profile.bio}} </p>
+                {% if request.user == user_profile %}
+                <div class="flex flex-col items-center justify-center">
+                    <button id="edit-profile" class="p-2 m-2 font-bold bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer rounded-lg">
+                        Edit profile
+                    </button>
+
+                    <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data" id="edit-profile-form" class="hidden">
+                        {% csrf_token %}
+                        <div class="relative flex flex-col">
+                            <textarea name="user-bio" id="user-bio" rows="3" class="p-2 my-2 bg-gray-800 rounded-lg focus:outline-none"></textarea>
+                            <div class="flex">
+                                <input type="file" name="user-pfp" id="user-pfp" accept="image/*" class="w-0 h-0 opacity-0 absolute">
+                                <button type="button" onclick="document.getElementById('user-pfp').click()" class="p-2 bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold py-2 rounded">
+                                    Choose Profile Picture
+                                </button>
+                                <div class="ml-1">
+                                    <img id="pfp-preview" class="w-10 h-10 rounded hidden" src="#" alt="Pfp Preview">
+                                </div>
+                            </div>
+                            <button type="submit" class="p-2 m-2 font-bold bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer rounded-lg">
+                                Edit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+                <input type="hidden" id="user_id" value="{{user_profile.id}}">
+
+                {% if user.is_authenticated and request.user != user_profile %}
+                    <div class="flex flex-col items-center justify-center">
+                        {% if subscribed %}
+                            <button data-action="unsubscribe" class="action w-1/6 m-2 p-1 rounded-lg bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold">
+                                - Unsubscribe
+                            </button>
+                        {% else %}
+                            <button data-action="subscribe" class="action w-1/6 m-2 p-1 rounded-lg bg-red-500 text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 font-bold">
+                                + Subscribe
+                            </button>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
                 <div class="flex items-center justify-evenly m-4">
-                    <div class="bg-red-500 p-2 m-1 w-1/2 rounded-lg text-center font-bold text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer">
+                    <div id="uploaded-videos-div" class="bg-red-500 p-2 m-1 w-1/2 rounded-lg text-center font-bold text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer">
                         Uploaded Videos
                     </div>
-                    <div class="bg-red-500 p-2 m-1 w-1/2 rounded-lg text-center font-bold text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer">
+                    <div id="liked-videos-div" class="bg-red-500 p-2 m-1 w-1/2 rounded-lg text-center font-bold text-gray-950 hover:bg-gray-950 hover:text-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer">
                         Liked Videos
                     </div>
                 </div>
+
+                <div id="uploaded-videos" class="grid grid-cols-1 place-items-center w-full"></div>
+
+                <div id="liked-videos" class="grid grid-cols-1 place-items-center w-full"></div>
             </div>
         </div>
     </body>
@@ -29,4 +74,5 @@
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'streamer/profile.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends "streamer/layout.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Search Results</title>
+{% endblock %}
+
+{% block body %}
+
+    <body class="bg-gray-950 p-4">
+        <div class="w-full p-4 flex flex-col">
+            <h1 class="my-4 font-nunito font-medium text-2xl text-red-500">Showing search results for "{{query}}"</h1>
+            {% if videos %}
+                {% for video in videos %}
+                    <a href="{% url 'watch_video' video.id %}" class="my-2">
+                        <div class="flex rounded-lg bg-gray-800 hover:bg-gray-950 hover:ring-1 hover:ring-red-500">
+                            <h2 class="p-2 mx-2 font-nunito font-semibold text-xl text-white">
+                                {{video.title}}
+                            </h2>
+                            <h2 class="p-2 mx-2 font-nunito text-xl text-white">
+                                Uploaded by: {{video.creator}}
+                            </h2>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <h1 class="my-4 font-nunito font-medium text-2xl text-dull-white">
+                    Your search doesn't match any videos 😓
+                </h1>
+            {% endif %}
+        </div>        
+    </body>
+
+{% endblock %}
+
+{% block script %}
+  <script src=""></script>
+{% endblock %}

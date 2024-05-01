@@ -7,7 +7,7 @@
 
 {% block body %}
 
-    <body class="bg-gradient-to-r from-[#F28383] from-10% via-[#9D6CD2] via-30% to-[#481EDC] to-90% flex items-center justify-center h-screen">
+    <body class="bg-gradient-to-r from-[#F28383] from-10% via-[#F198B2] via-30% to-[#F04539] to-90% flex items-center justify-center h-screen">
         <div class="max-w-[1260px] bg-black-dark grid grid-cols-2 items-center gap-20 p-5 rounded-2xl">
             <div class="relative">
                 <img src="{% static 'streamer/video-camera.svg' %}" alt="" class="absolute -top-40">
@@ -41,10 +41,10 @@
                         </div>
                         <input type="password" name="confirmation" placeholder="Re-type password" required class="w-80 bg-white-light py-2 px-12 rounded-full focus:bg-black-dark focus:outline-none focus:ring-1 focus:ring-neon-blue focus:drop-shadow-lg">
                     </div>
-                    <button class="bg-gradient-to-r from-blue-400 to-cyan-200 w-80 font-semibold rounded-full py-2">Sign Up</button>
+                    <button class="bg-gradient-to-r from-red-500 to-pink-500 w-80 font-semibold rounded-full py-2">Sign Up</button>
                 </form>
                 <div class="text-dull-white border-t border-white-light pt-4 space-y-4 text-sm">
-                    <p>Already have an account? <a class="text-neon-blue font-semibold cursor-pointer" href="{% url 'login' %}">Log In</a></p>
+                    <p>Already have an account? <a class="text-neon-red font-semibold cursor-pointer" href="{% url 'login' %}">Log In</a></p>
                 </div>
 
                 {% if message %}

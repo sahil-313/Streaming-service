@@ -21,35 +21,35 @@
           <div class="mt-6">
             <ul class="px-1 -ml-px space-y-4 font-medium tracking-wide">
               <li class="w-max space-y-4 group-hover:w-full">
-                <a href="" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
+                <div id="home" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full hover:cursor-pointer">
                   <div class="w-max flex items-center px-3 gap-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>                    
                     <span class="text-white">Home</span>
                   </div>
-                </a>
+                </div>
               </li>
               {% if user.is_authenticated %}
               <li class="w-max group-hover:w-full">
-                <a href="" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
+                <div id="subscriptions" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full hover:cursor-pointer">
                   <div class="w-max flex items-center px-3 gap-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                     </svg>                                                            
                     <span class="text-white">Subscriptions</span>
                   </div>
-                </a>
+                </div>
               </li>
               <li class="w-max group-hover:w-full">
-                <a href="" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
+                <div id="playlists" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full hover:cursor-pointer">
                   <div class="w-max flex items-center px-3 gap-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
                     </svg>                    
                     <span class="text-white">Playlists</span>
                   </div>
-                </a>
+                </div>
               </li>
               <li class="w-max group-hover:w-full">
                 <a href="{% url 'upload_video' %}" class="block py-3 w-[52px] rounded-full bg-gray-950 group-hover:w-full">
@@ -97,7 +97,7 @@
     <main class="w-[calc(100%-3.73rem)] ml-auto">
       <div class="2xl:container mx-auto space-y-6">
         <div class="h-16 flex items-center justify-center">
-          <form action="" method="get" class="relative">
+          <form action="{% url 'search_videos' %}" method="GET" class="relative">
             <input type="text" name="search" id="search" placeholder="Type here to search" class="w-96 bg-red-300/10 py-2 px-6 rounded-full focus:bg-red-200/5 focus:outline-none focus:ring-1 focus:ring-red-500 text-white">
             <button type="submit" class="absolute right-4 top-1/2 transform -translate-y-1/2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -107,7 +107,13 @@
           </form>
         </div>
         <div class="px-6 lg:px-12">
-          <div id="video-container" class="h-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 rounded-2xl mb-4">
+          <div id="video-container" class="h-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-4">
+          </div>
+
+          <div id="subscriptions-container" class="h-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-4 hidden">
+          </div>
+
+          <div id="playlists-container" class="h-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-4 hidden">
           </div>
         </div>
       </div>
