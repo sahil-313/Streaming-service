@@ -11,6 +11,7 @@ module.exports = {
         'white-light': '#FFFFFF30',
         'white-medium': '#FFFFFF40',
         'neon-blue': '#2FB8FF',
+        'neon-red': '#FF5733',
       },
       fontFamily: {
         'nunito': ['nunito', 'sans-serif'],
