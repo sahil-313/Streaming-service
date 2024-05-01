@@ -55,3 +55,6 @@ Icon?
 
 # VS Code
 .vscode/
+
+# env variables
+creds.env
