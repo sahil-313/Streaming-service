@@ -1,1 +1,0 @@
-web: gunicorn streaming_service.wsgi
